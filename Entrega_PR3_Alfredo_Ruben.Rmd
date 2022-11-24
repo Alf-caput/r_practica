@@ -1,6 +1,6 @@
 ---
-title: "Practica3_Alfredo_Ruben"
-author: "Alfredo Robledano Abasolo"
+title: "Práctica 3"
+author: "Alfredo Robledano Abasolo y Rubén Sierra Serrano"
 date: "`r Sys.Date()`"
 output: pdf_document
 ---
@@ -41,7 +41,8 @@ plot(0:75, var1,
 var2 <- pgeom(10, 0.001)
 print(var2)
 ```
-  \textbf{La probabilidad es de: 0.01094516}
+La probabilidad es de: 0.01094516
+
 ## Problema 2
 El esquema de aceptación para comprar lotes que contienen un número grande de baterías
 consiste en probar no más de 75 baterías seleccionadas al azar y rechazar el lote completo si
@@ -59,15 +60,12 @@ x <- 0:7
 y <- dexp(x, 1/3)
 plot(x, y, type = "l",
 ylab = "Función de densidad",
-xlab = "Tiempo dew respuesta (x)", lwd = 4, col = "darkseagreen4")
+xlab = "Tiempo de respuesta (x)", lwd = 4, col = "darkseagreen4")
 
 polygon(c(0, x, 7), c(0, y, 0), col = "darkseagreen2")
 
 ```
 Significa que conforme aumenta el tiempo de respuesta, menor es la probabilidad de que esta siga aumentando.
-```{r}
-dgeom(75, 0.001) * 100
-```
 
 ## Problema 3
 Elegid una base de datos en alguno de los recursos web que estudiamos en el primer tema, os los
@@ -79,7 +77,6 @@ Primero leemos la base de datos.
 ```{r}
 library(dplyr)
 datos <- read.csv('ds_salaries.csv')
-print(datos)
 ```
 Nos encontramos ante una base de datos que contiene los salarios de empleos agrupables en el campo de computer science.
 
@@ -99,9 +96,10 @@ Como devuelve FALSE en todas las variables significa que no hay valores Not Avai
 Utilizamos la función mean() para obtener la media de los salarios.
 ```{r}
 df <- as.data.frame(datos)
-df %>% select_if(is.numeric)
+
 media_salario_usd <- mean(datos$salary_in_usd)
 de_salario_usd <- sd(df$salary_in_usd)
+
 print(media_salario_usd)
 print(de_salario_usd)
 ```
@@ -114,11 +112,18 @@ salario_usd <- dnorm(x = min(datos$salary_in_usd):max(datos$salary_in_usd),
                      mean = media_salario_usd,
                      sd = de_salario_usd,
                      log = FALSE)
-hist(datos$salary_in_usd,ylab = "Función de densidad", xlab = "Salario en USD (x)",main = "Función de salarios en USD")
+
+hist(datos$salary_in_usd, 
+     ylab = "Función de densidad", xlab = "Salario en USD (x)",
+     main = "Función de salarios en USD")
+
 par(new=TRUE,yaxs="i", xaxt='n',yaxt='n',ann=FALSE )
-plot(min(datos$salary_in_usd):max(datos$salary_in_usd), salario_usd, type = "l",  ylab = "Función de densidad", 
-xlab = "Salario en USD (x)", lwd = 4, col = "darkseagreen4") 
+plot(min(datos$salary_in_usd):max(datos$salary_in_usd), salario_usd,
+     type = "l",  ylab = "Función de densidad", xlab = "Salario en USD (x)",
+     lwd = 4, col = "darkseagreen4") 
+
 abline(v = media_salario_usd, lwd = 1,col = "red")
+
 legend("topright",legend=c("Media", "Función de distribución"),
        col=c("red", "darkseagreen4"),lty=1)
 ```
@@ -126,6 +131,7 @@ Debido a la correlación entre el histograma y la función, podemos asegurar que
 ```{r}
 media_distancia <- mean(datos$remote_ratio)
 de_distancia <- sd(df$remote_ratio)
+
 print(media_distancia)
 print(de_distancia)
 ```
@@ -136,11 +142,19 @@ distancia <- dnorm(x = min(datos$remote_ratio):max(datos$remote_ratio),
                      mean = media_distancia,
                      sd = de_distancia,
                      log = FALSE)
-hist(datos$remote_ratio,ylab = "Función de densidad", xlab = "Porcentaje trabajo a distancia(x)",main = "Función de la distancia del trabajo remoto")
+
+hist(datos$remote_ratio, 
+     ylab = "Función de densidad", xlab = "Porcentaje trabajo a distancia(x)",
+     main = "Función de la distancia del trabajo remoto")
+
 par(new=TRUE,yaxs="i", xaxt='n',yaxt='n',ann=FALSE )
-plot(min(datos$remote_ratio):max(datos$remote_ratio),distancia, type = "l",  ylab = "Función de densidad", 
-xlab = "Distancia(x)", lwd = 4, col = "darkseagreen4") 
+
+plot(min(datos$remote_ratio):max(datos$remote_ratio),distancia, 
+     type = "l", ylab = "Función de densidad", xlab = "Distancia(x)",
+     lwd = 4, col = "darkseagreen4") 
+
 abline(v = media_distancia, lwd = 1,col = "red")
+
 legend("topleft",legend=c("Media", "Función de distribución"),
        col=c("red", "darkseagreen4"),lty=1)
 ```
