@@ -103,6 +103,7 @@ df %>% select_if(is.numeric)
 media_salario_usd <- mean(datos$salary_in_usd)
 de_salario_usd <- sd(df$salary_in_usd)
 print(media_salario_usd)
+print(de_salario_usd)
 ```
 Se trata de un valor razonable, teniendo en cuenta el valor que están tomando estos empleos con la digitalización de las empresas y la aparición de empresas que manejen grandes cantidades de datos.
 
@@ -122,3 +123,25 @@ legend("topright",legend=c("Media", "Función de distribución"),
        col=c("red", "darkseagreen4"),lty=1)
 ```
 Debido a la correlación entre el histograma y la función, podemos asegurar que se trata de una distribución normal.
+```{r}
+media_distancia <- mean(datos$remote_ratio)
+de_distancia <- sd(df$remote_ratio)
+print(media_distancia)
+print(de_distancia)
+```
+```{r}
+options(scipen=999)
+
+distancia <- dnorm(x = min(datos$remote_ratio):max(datos$remote_ratio),
+                     mean = media_distancia,
+                     sd = de_distancia,
+                     log = FALSE)
+hist(datos$remote_ratio,ylab = "Función de densidad", xlab = "Salario en USD (x)",main = "Función de la distancia del trabajo remoto")
+par(new=TRUE,yaxs="i", xaxt='n',yaxt='n',ann=FALSE )
+plot(min(datos$remote_ratio):max(datos$remote_ratio),distancia, type = "l",  ylab = "Función de densidad", 
+xlab = "Distancia(x)", lwd = 4, col = "darkseagreen4") 
+abline(v = media_salario_usd, lwd = 1,col = "red")
+legend("topleft",legend=c("Media", "Función de distribución"),
+       col=c("red", "darkseagreen4"),lty=1)
+```
+
