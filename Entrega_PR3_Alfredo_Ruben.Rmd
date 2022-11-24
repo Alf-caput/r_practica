@@ -110,10 +110,12 @@ salario_usd <- dnorm(x = min(datos$salary_in_usd):max(datos$salary_in_usd),
                      mean = media_salario_usd,
                      sd = de_salario_usd,
                      log = FALSE)
+hist(datos$salary_in_usd)
+par(new=TRUE)
 plot(min(datos$salary_in_usd):max(datos$salary_in_usd), salario_usd, type = "l",
 ylab = "Función de densidad",
 xlab = "Salario en USD (x)", lwd = 4, col = "darkseagreen4")
-
+hist(datos$salary_in_usd)
 ```
 
 
