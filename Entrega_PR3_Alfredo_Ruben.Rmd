@@ -105,6 +105,7 @@ de_salario_usd <- sd(df$salary_in_usd)
 print(media_salario_usd)
 ```
 Se trata de un valor razonable, teniendo en cuenta el valor que están tomando estos empleos con la digitalización de las empresas y la aparición de empresas que manejen grandes cantidades de datos.
+
 ```{r}
 options(scipen=999)
 
@@ -112,14 +113,12 @@ salario_usd <- dnorm(x = min(datos$salary_in_usd):max(datos$salary_in_usd),
                      mean = media_salario_usd,
                      sd = de_salario_usd,
                      log = FALSE)
-
-hist(datos$salary_in_usd,ylab = "Función de densidad", xlab = "Salario en USD (x)")
-par(new=TRUE,yaxs="i", xaxt='n',yaxt='n',ann=FALSE)
-plot(min(datos$salary_in_usd):max(datos$salary_in_usd), salario_usd, type = "l"    ,  ylab = "Función de densidad", 
+hist(datos$salary_in_usd,ylab = "Función de densidad", xlab = "Salario en USD (x)",main = "Función de salarios en USD")
+par(new=TRUE,yaxs="i", xaxt='n',yaxt='n',ann=FALSE )
+plot(min(datos$salary_in_usd):max(datos$salary_in_usd), salario_usd, type = "l",  ylab = "Función de densidad", 
 xlab = "Salario en USD (x)", lwd = 4, col = "darkseagreen4") 
 abline(v = media_salario_usd, lwd = 1,col = "red")
 legend("topright",legend=c("Media", "Función de distribución"),
        col=c("red", "darkseagreen4"),lty=1)
 ```
-
-
+Debido a la correlación entre el histograma y la función, podemos asegurar que se trata de una distribución normal.
