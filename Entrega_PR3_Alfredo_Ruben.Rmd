@@ -136,12 +136,12 @@ distancia <- dnorm(x = min(datos$remote_ratio):max(datos$remote_ratio),
                      mean = media_distancia,
                      sd = de_distancia,
                      log = FALSE)
-hist(datos$remote_ratio,ylab = "Función de densidad", xlab = "Salario en USD (x)",main = "Función de la distancia del trabajo remoto")
+hist(datos$remote_ratio,ylab = "Función de densidad", xlab = "Porcentaje trabajo a distancia(x)",main = "Función de la distancia del trabajo remoto")
 par(new=TRUE,yaxs="i", xaxt='n',yaxt='n',ann=FALSE )
 plot(min(datos$remote_ratio):max(datos$remote_ratio),distancia, type = "l",  ylab = "Función de densidad", 
 xlab = "Distancia(x)", lwd = 4, col = "darkseagreen4") 
-abline(v = media_salario_usd, lwd = 1,col = "red")
+abline(v = media_distancia, lwd = 1,col = "red")
 legend("topleft",legend=c("Media", "Función de distribución"),
        col=c("red", "darkseagreen4"),lty=1)
 ```
-
+Observamos que la variable trabajo remoto no sigue ninguna distribucion que hayamos estudiado (hemos tratado de comparar el histograma con la distribución normal).
