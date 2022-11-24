@@ -77,7 +77,9 @@ la base de datos que hayáis elegido, debéis realizar los siguientes puntos o a
 1. Definir las variables (y sus tipos) y explicar en qué consiste la base de datos.
 Primero leemos la base de datos.
 ```{r}
+library(dplyr)
 datos <- read.csv('ds_salaries.csv')
+print(datos)
 ```
 Nos encontramos ante una base de datos que contiene los salarios de empleos agrupables en el campo de computer science.
 
@@ -96,15 +98,22 @@ Como devuelve FALSE en todas las variables significa que no hay valores Not Avai
 
 Utilizamos la función mean() para obtener la media de los salarios.
 ```{r}
-mean(datos$salary_in_usd)
+df <- as.data.frame(datos)
+df %>% select_if(is.numeric)
+media_salario_usd <- mean(datos$salary_in_usd)
+de_salario_usd <- sd(df$salary_in_usd)
+print(media_salario_usd)
 ```
 Se trata de un valor razonable, teniendo en cuenta el valor que están tomando estos empleos con la digitalización de las empresas y la aparición de empresas que manejen grandes cantidades de datos.
 ```{r}
-plot(X = c(), y = freq(data$salary),
-     xlab = "x-axis",
-     ylab = "y-axis",
-     main = "Plot"
-)
+salario_usd <- dnorm(x = min(datos$salary_in_usd):max(datos$salary_in_usd),
+                     mean = media_salario_usd,
+                     sd = de_salario_usd,
+                     log = FALSE)
+plot(min(datos$salary_in_usd):max(datos$salary_in_usd), salario_usd, type = "l",
+ylab = "Función de densidad",
+xlab = "Salario en USD (x)", lwd = 4, col = "darkseagreen4")
+
 ```
 
 
