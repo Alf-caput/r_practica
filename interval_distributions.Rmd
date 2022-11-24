@@ -1,0 +1,102 @@
+---
+title: "Prueba"
+author: "Alfredo Robledano Abasolo, Ruben Sierra Serrano"
+date: "`r Sys.Date()`"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+##Discrete distributions
+
+```{r}
+x <- seq(0,10)
+y <- dbinom(x,10,0.25)
+plot(x,y)
+y1 <- dbinom(3, 10, 0.25)  # d para densidad
+y2 <- pbinom(2,10,0.25)  # p para distribucion
+```
+
+```{r}
+# n: number of trials
+# prob: probability of success in each trial
+# lb: lower bound
+# ub: upper bound
+# (lb and ub are x: number of success)
+# by default closed interval
+pbinom_interval <- function(n, prob, 
+                            lb, ub, 
+                            contains_lb = TRUE, contains_ub = TRUE) {
+  return(pbinom(ub-!(contains_ub), n, prob) - pbinom(lb-contains_lb, n, prob))
+}
+```
+
+
+```{r}
+# m: number of items considered success
+# n: number of items considered failure
+# k: number of items you drawn
+# lb: lower bound
+# ub: upper bound
+# (lb and ub are x: amount of items considered success you want drawn)
+# by default closed interval
+phyper_interval <- function(m, n, k,  
+                            lb, ub, 
+                            contains_lb = TRUE, contains_ub = TRUE) {
+  return(phyper(ub-!(contains_ub), m, n, k) - phyper(lb-contains_lb, m, n, k))
+}
+```
+
+
+```{r}
+# k: number of trials needed at least to watch success in last
+# prob: probability of success in each trial
+# lb: lower bound
+# ub: upper bound
+# (lb and ub are x: number of trials that I want to watch before success in last)
+# by default closed interval
+pnbinom_interval <- function(k, prob, 
+                            lb, ub, 
+                            contains_lb = TRUE, contains_ub = TRUE) {
+  return(pnbinom(ub-!(contains_ub), k, prob) - pnbinom(lb-contains_lb, k, prob))
+}
+```
+
+
+```{r}
+# same as pnbinom but k=1
+pgeom_interval <- function(prob, 
+                            lb, ub, 
+                            contains_lb = TRUE, contains_ub = TRUE) {
+  return(pgeom(ub-!(contains_ub), prob) - pgeom(lb-contains_lb, prob))
+}
+```
+
+
+```{r}
+# lambda: mean
+# (lb and ub are x: results ocurred in an experiment)
+# by default closed interval
+ppois_interval <- function(lambda,
+                            lb, ub, 
+                            contains_lb = TRUE, contains_ub = TRUE) {
+  return(ppois(ub-!(contains_ub), lambda) - ppois(lb-contains_lb, lambda))
+}
+```
+
+##Continuous distributions 
+contains_bound = !(contains_bound)
+```{r}
+pnorm_interval <- function(mean, sd,
+                            lb, ub, 
+                            contains_lb = TRUE, contains_ub = TRUE) {
+  return(pnorm(ub, mean, sd) - pnorm(lb, mean, sd))
+}
+```
+
+
+
+
+

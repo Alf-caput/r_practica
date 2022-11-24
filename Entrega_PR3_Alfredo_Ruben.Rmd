@@ -1,0 +1,110 @@
+---
+title: "Practica3_Alfredo_Ruben"
+author: "Alfredo Robledano Abasolo"
+date: "`r Sys.Date()`"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+## Problema 1
+
+El esquema de aceptación para comprar lotes que contienen un número grande de baterías
+consiste en probar no más de 75 baterías seleccionadas al azar y rechazar el lote completo si
+falla una sola batería. Se supone que la probabilidad de encontrar una que falle es de 0,001.
+
+1. ¿Cuál es la probabilidad de que se acepte un lote?. Define la variable y representa la
+fucnión de masa / densidad correspondiente.
+
+2. ¿Cuál es la probabilidad de que se rechace un lote en 10 pruebas o menos?. Define la
+variable y representa la fucnión de distribución correspondiente.
+
+Es una variable discreta
+X = número de baterías defectuosas
+Se trata de una distribución geómetrica
+```{r}
+var1 <- dgeom(x = 0:75,
+              prob = 0.001,
+              log = FALSE)
+print(var1)
+
+plot(0:75, var1,
+  main = "Función de probabilidad geómetrica",
+  ylab = "f(x) = P(X = x)", xlab = "Número de éxitos(x)")
+```
+
+  \textbf {La probabilidad de que el lote sea retirado es de: 0.0009277087}
+  \textbf{b)
+  P(lote se rechace con 10 pruebas o menos):}
+```{r}
+var2 <- pgeom(10, 0.001)
+print(var2)
+```
+  \textbf{La probabilidad es de: 0.01094516}
+## Problema 2
+El esquema de aceptación para comprar lotes que contienen un número grande de baterías
+consiste en probar no más de 75 baterías seleccionadas al azar y rechazar el lote completo si
+falla una sola batería. Se supone que la probabilidad de encontrar una que falle es de 0,001.
+
+1. ¿Cuál es la probabilidad de que el tiempo de respuesta exceda los 5 segundos? ¿P(X > 5)?
+```{r}
+print(pexp(5, 1/3, lower.tail = FALSE))
+```
+
+2. Representa la función de masa / densidad correspondiente y explica su significado (¿Qué significa este gráfico?).
+
+```{r}
+x <- 0:7
+y <- dexp(x, 1/3)
+plot(x, y, type = "l",
+ylab = "Función de densidad",
+xlab = "Tiempo dew respuesta (x)", lwd = 4, col = "darkseagreen4")
+
+polygon(c(0, x, 7), c(0, y, 0), col = "darkseagreen2")
+
+```
+Significa que conforme aumenta el tiempo de respuesta, menor es la probabilidad de que esta siga aumentando.
+```{r}
+dgeom(75, 0.001) * 100
+```
+
+## Problema 3
+Elegid una base de datos en alguno de los recursos web que estudiamos en el primer tema, os los
+recuerdo: https://archive.ics.uci.edu/ml/datasets.php y https://www.kaggle.com/datasets.Con
+la base de datos que hayáis elegido, debéis realizar los siguientes puntos o apartados:
+
+1. Definir las variables (y sus tipos) y explicar en qué consiste la base de datos.
+Primero leemos la base de datos.
+```{r}
+datos <- read.csv('ds_salaries.csv')
+```
+Nos encontramos ante una base de datos que contiene los salarios de empleos agrupables en el campo de computer science.
+
+A continuación, vamos a determinar el tipo de variables que tenemos en la base de datos, pueden ser o bien cuantitativas o bien categóricas, para ello, nos vamos a fijar en el tipo de datos de cada una de las variables, en caso de ser numérica serán cuantitativas y en caso de ser de texto será categórica.
+```{r}
+summary(datos)
+```
+Por tanto, las variables enteras (int) son las cuantitativas que son: work-year, salary, salary_in_usd y remote_ratio. Y las variables character (chr) son las categóricas que son: experience_level, employment_type, job_title, salary_currency, employee_residence, company_location y company_size.
+
+2. Realizar una limpieza básica (eliminar NA y comprobar si hay valores extraños).
+Empleamos la función apply() y aplicamos la función any() para determinar si hay algún valor Not Available (NA) o infinito (Inf) en los valores de las variables de nuestra base de datos.
+```{r}
+apply(datos, 2, function(x) any(is.na(x)| is.infinite(x)))
+```
+Como devuelve FALSE en todas las variables significa que no hay valores Not Available (NA) o infinitos (Inf) en el data frame.
+
+Utilizamos la función mean() para obtener la media de los salarios.
+```{r}
+mean(datos$salary_in_usd)
+```
+Se trata de un valor razonable, teniendo en cuenta el valor que están tomando estos empleos con la digitalización de las empresas y la aparición de empresas que manejen grandes cantidades de datos.
+```{r}
+plot(X = c(), y = freq(data$salary),
+     xlab = "x-axis",
+     ylab = "y-axis",
+     main = "Plot"
+)
+```
+
+
