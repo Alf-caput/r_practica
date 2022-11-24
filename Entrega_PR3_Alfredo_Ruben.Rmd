@@ -106,6 +106,8 @@ print(media_salario_usd)
 ```
 Se trata de un valor razonable, teniendo en cuenta el valor que están tomando estos empleos con la digitalización de las empresas y la aparición de empresas que manejen grandes cantidades de datos.
 ```{r}
+options(scipen=999)
+
 salario_usd <- dnorm(x = min(datos$salary_in_usd):max(datos$salary_in_usd),
                      mean = media_salario_usd,
                      sd = de_salario_usd,
